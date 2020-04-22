@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Covid19 NJ Stats</string>
+    <string name="channel_name">covid19NJStats</string>
+    <string name="channel_description">Notifications from covid19NjStats App</string>
+    <string name="default_notification_channel_id">0987654321</string>
+    <string name="positive">positive: %d</string>
+    <string name="negative">positive: %d</string>
+    <string name="deaths">deaths: %d</string>
+    <string name="last_update">Last Update: %s</string>
+
+    <!--    api calls-->
+    <string name="todayUri">https://covid19njapi.herokuapp.com/today</string>
+    <string name="allUri">https://covid19njapi.herokuapp.com/all</string>
+    <string name="urlEssex">https://covid19njapi.herokuapp.com/essex</string>
+    <string name="stateURL">https://covid19njapi.herokuapp.com/state</string>
+    <string name="stateHistoryTitle">State History</string>
+    <string name="growthNJ">https://covid19njapi.herokuapp.com/growthNJ</string>
+    <string name="percent_per_day">% per day</string>
+    <string name="error_state_data_message">Could not get State data</string>
+    <string name="error_growth_state">Could not get data from state</string>
+
+</resources>

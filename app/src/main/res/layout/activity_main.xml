@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".activities.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/last_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:text="@string/last_update"
+            android:textSize="23sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/textlines"
+                    android:text="State"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_positive_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="positite"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_negative_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="negative"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_deaths_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="deaths"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:background="@drawable/textlines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Essex"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:id="@+id/tv_positive_essex"
+                    android:layout_width="match_parent"
+                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:text="positite"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_negative_essex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="negative"></TextView>
+
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_deaths_essex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="deaths"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="History"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/btn_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="State"/>
+
+        <Button
+            android:id="@+id/btn_essex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Essex"/>
+
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart_all"
+            android:layout_width="match_parent"
+            android:layout_height="375dp" />
+
+
+    </LinearLayout>
+
+</ScrollView>
