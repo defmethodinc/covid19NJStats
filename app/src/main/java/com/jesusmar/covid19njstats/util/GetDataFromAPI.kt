@@ -1,25 +1,24 @@
 package com.jesusmar.covid19njstats.util
 
+import android.content.Context
+
 import android.os.AsyncTask
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import com.jesusmar.covid19njstats.R
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.URL
+import java.nio.charset.Charset
 
-
-class GetDataFromAPITask(url: String): AsyncTask<Any, Void ,String>() {
+class GetDataFromAPITask(private val mUrl: String, private val context: Context): AsyncTask<Any, Void ,String>() {
 
     private lateinit var mDataListener: DataListener
-    private val mUrl = url
-
 
     fun getData(){
         execute()
     }
 
-    override fun doInBackground(vararg params: Any?): String {
+    private fun getAuthenticatedData(token:String):String {
         var result : String
         try {
             val url = URL(mUrl)
@@ -28,6 +27,8 @@ class GetDataFromAPITask(url: String): AsyncTask<Any, Void ,String>() {
             connection.doInput = true
             connection.doOutput = false
 
+            connection.setRequestProperty("Content-Type", "application/json")
+            connection.setRequestProperty("Authorization", token)
 
             val httpResult: Int = connection.responseCode
 
@@ -62,6 +63,13 @@ class GetDataFromAPITask(url: String): AsyncTask<Any, Void ,String>() {
             result = "deu chabu desconehcido"
         }
         return result
+    }
+
+    override fun doInBackground(vararg params: Any?): String {
+        val shared = context.getSharedPreferences(context.getString(R.string.sharedPrefs), 0)
+        val apiToken = shared.getString(context.getString(R.string.auth0TokenKey), "")!!
+
+        return getAuthenticatedData(apiToken)
     }
 
     override fun onPostExecute(result: String?) {

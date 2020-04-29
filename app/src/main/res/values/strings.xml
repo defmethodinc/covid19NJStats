@@ -3,20 +3,36 @@
     <string name="channel_name">covid19NJStats</string>
     <string name="channel_description">Notifications from covid19NjStats App</string>
     <string name="default_notification_channel_id">0987654321</string>
+    <string name="sharedPrefs">covid19NJStat</string>
+
+    <!-- Labels/code strings -->
     <string name="positive">positive: %d</string>
     <string name="negative">positive: %d</string>
     <string name="deaths">deaths: %d</string>
     <string name="last_update">Last Update: %s</string>
+    <string name="stateHistoryTitle">State History</string>
+    <string name="percent_per_day">% per day</string>
+    <string name="auth0TokenKey">Auth0token</string>
+    <string name="accumulative_comparison">Accumulative comparison</string>
+    <string name="NJ">NJ</string>
+    <string name="essex">Essex</string>
 
     <!--    api calls-->
     <string name="todayUri">https://covid19njapi.herokuapp.com/today</string>
     <string name="allUri">https://covid19njapi.herokuapp.com/all</string>
     <string name="urlEssex">https://covid19njapi.herokuapp.com/essex</string>
     <string name="stateURL">https://covid19njapi.herokuapp.com/state</string>
-    <string name="stateHistoryTitle">State History</string>
-    <string name="growthNJ">https://covid19njapi.herokuapp.com/growthNJ</string>
-    <string name="percent_per_day">% per day</string>
+    <string name="growth_nj">https://covid19njapi.herokuapp.com/growth_nj</string>
+    <string name="growth_essex">https://covid19njapi.herokuapp.com/growth_essex</string>
+
+    <!-- errors -->
     <string name="error_state_data_message">Could not get State data</string>
     <string name="error_growth_state">Could not get data from state</string>
-
+    <string name="try_again_latter">Oops, please try again later</string>
+    <string name="api_authentication_failed_tryagan_later">API Authentication Failed, try again later</string>
+    <string name="biometric_authentication_failed_tryagan_later">Biometric Authentication Failed, try again later</string>
+    <string name="state">State</string>
+    <string name="History">History</string>
+    <string name="state_growth_label">State Daily growth %</string>
+    <string name="essex_daily_growth">Essex daily growth %</string>
 </resources>

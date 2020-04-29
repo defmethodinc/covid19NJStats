@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,15 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:text="@string/last_update"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -40,9 +40,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/textlines"
-                    android:text="State"
+                    android:text="@string/state"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -50,7 +50,7 @@
                     android:id="@+id/tv_positive_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="positite"></TextView>
+                    android:text="@string/positive"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -58,7 +58,7 @@
                     android:id="@+id/tv_negative_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="negative"></TextView>
+                    android:text="@string/negative"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -66,7 +66,7 @@
                     android:id="@+id/tv_deaths_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="deaths"></TextView>
+                    android:text="@string/deaths"/>
             </LinearLayout>
 
             <LinearLayout
@@ -81,9 +81,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Essex"
+                    android:text="@string/essex"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:textSize="15sp"
                     android:layout_height="wrap_content"
-                    android:text="positite"></TextView>
+                    android:text="@string/positive"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -99,7 +99,7 @@
                     android:id="@+id/tv_negative_essex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="negative"></TextView>
+                    android:text="@string/negative"/>
 
                 <TextView
                     android:paddingBottom="5dp"
@@ -107,35 +107,46 @@
                     android:id="@+id/tv_deaths_essex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="deaths"></TextView>
+                    android:text="@string/deaths"/>
             </LinearLayout>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="History"
+            android:text="@string/History"
             android:textSize="25sp"
             android:textStyle="bold"/>
         <Button
             android:id="@+id/btn_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="State"/>
+            android:text="@string/state"/>
 
         <Button
             android:id="@+id/btn_essex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Essex"/>
+            android:text="@string/essex"/>
 
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart_all"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="375dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/accumulative_comparison"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart_all"
+                android:layout_width="match_parent"
+                android:layout_height="339dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
     </LinearLayout>
-
 </ScrollView>

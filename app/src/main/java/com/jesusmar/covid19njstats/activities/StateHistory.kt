@@ -1,9 +1,12 @@
 package com.jesusmar.covid19njstats.activities
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import com.jesusmar.covid19njstats.R
@@ -28,48 +31,13 @@ class StateHistory : AppCompatActivity() {
             onBackPressed()
         }
 
-        getStateData()
         getStateGrowth()
-    }
-
-    private fun getStateData() {
-
-        val dataTask = GetDataFromAPITask(
-            getString(R.string.stateURL)
-        )
-
-        val listener = object :
-            GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-                val response = Gson().fromJson(data, ResponseData::class.java)
-                val stateData: List<DailyData>  = response.dailyData
-                val entries = ArrayList<BarEntry>()
-                for ((day, dataRow) in stateData.withIndex()) {
-                    entries.add(BarEntry((day).toFloat(), dataRow.positive.toFloat()))
-                }
-
-                val dataSet = BarDataSet(entries, "Accumulative")
-                val barData = BarData(dataSet)
-                barData.setDrawValues(false)
-                chart.data = barData
-                chart.invalidate()
-            }
-
-            override fun onError() {
-                Toast.makeText(this@StateHistory,
-                    getString(R.string.error_state_data_message),
-                    Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        dataTask.setDataListener(listener)
-        dataTask.getData()
     }
 
     private fun getStateGrowth() {
 
             val dataTask = GetDataFromAPITask(
-                getString(R.string.growthNJ)
+                getString(R.string.growth_nj), this
             )
 
             dataTask.setDataListener(object :
@@ -83,9 +51,38 @@ class StateHistory : AppCompatActivity() {
                 }
 
                 val dataSet = LineDataSet(entries, getString(R.string.percent_per_day))
+                dataSet.highlightLineWidth = 1F
+
+
+                dataSet.color = R.color.colorPrimaryDark
+                dataSet.lineWidth = 2.75f
+                dataSet.circleRadius = 1f
+                dataSet.circleColors = listOf(R.color.colorPrimaryDark)
+                dataSet.circleHoleRadius = 1.0f
+
+
+
+                val formatter = object: ValueFormatter(){
+                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                        return "${value.toInt()}%"
+                    }
+                }
+
                 val lineData = LineData(dataSet)
+                lineData.setValueTextSize(8f)
+
+                chart_growthState.axisRight.setValueFormatter(formatter)
+                chart_growthState.xAxis.setLabelCount(entries.size / 5, true)
+                chart_growthState.xAxis.axisMinimum = 0F
+                chart_growthState.axisLeft.axisMinimum = 0F
+                chart_growthState.axisRight.axisMinimum = 0F
+                chart_growthState.axisRight.setLabelCount(10, true)
+                chart_growthState.axisLeft.setDrawLabels(false)
+                chart_growthState.description.text = ""
+                chart_growthState.description.textSize = 14F
                 chart_growthState.data = lineData
                 chart_growthState.invalidate()
+
             }
 
             override fun onError() {

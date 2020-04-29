@@ -12,10 +12,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:theme="@style/customToolBarStyle"
-        app:title="hahahahah"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,25 +28,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/chart"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="320dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/state_growth_label"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart_growthState"
                 android:layout_width="match_parent"
-                android:layout_height="296dp" />
-
+                android:layout_height="match_parent"
+                android:layout_margin="10dp" />
         </LinearLayout>
-
     </ScrollView>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
