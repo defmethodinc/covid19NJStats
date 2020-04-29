@@ -7,7 +7,6 @@ import org.junit.runners.Suite
 
 @Suite.SuiteClasses(
     MainActivityTest::class,
-    ExampleInstrumentedTest::class,
     GetDataFromAPITaskTest::class
 )
 
