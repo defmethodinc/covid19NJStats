@@ -15,8 +15,8 @@ android {
         applicationId "com.jesusmar.covid19njstats"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
         buildConfigField "String", "CLIENT_ID", apikeyProperties['CLIENT_ID']
         buildConfigField "String", "CLIENT_SECRET", apikeyProperties['CLIENT_SECRET']
         buildConfigField "String", "AUDIENCE", apikeyProperties['AUDIENCE']

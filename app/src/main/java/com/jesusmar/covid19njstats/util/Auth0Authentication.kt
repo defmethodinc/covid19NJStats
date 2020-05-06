@@ -3,8 +3,6 @@ package com.jesusmar.covid19njstats.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.AsyncTask
-import android.sax.TextElementListener
-import android.util.Log
 import com.google.gson.Gson
 import com.jesusmar.covid19njstats.BuildConfig
 import com.jesusmar.covid19njstats.R
@@ -53,7 +51,7 @@ class Auth0AuthenticationTask(private val context: Context): AsyncTask<Any, Void
                 writer.close()
                 os.close()
             } catch (a: IOException) {
-                Log.e("POST", "Ops - Could not save the Token")
+                result = "POST Ops - Could not save the Token"
             }
 
             val httpResult: Int = connection.responseCode

@@ -1,7 +1,6 @@
 package com.jesusmar.covid19njstats.notification
 
 import android.os.AsyncTask
-import android.util.Log
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
@@ -32,7 +31,7 @@ class ChannelRegister: AsyncTask<Any, Void ,String>() {
                 writer.close()
                 os.close()
             } catch (a: IOException) {
-                Log.e("POST", "Ops - Could not save the Token")
+                result = "POST Ops - Could not save the Token"
             }
 
             val httpResult: Int = connection.responseCode
