@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.CardStateContent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textAlignment="viewStart"
+                android:id="@+id/tv_positive_state"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:layout_width="0dp"
+                android:text="@string/positive"
+                android:textSize="@dimen/lbltextSize" />
+
+            <TextView
+                android:textAlignment="viewEnd"
+                android:layout_weight="1"
+                android:id="@+id/tv_positive_state_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="@dimen/lbltextSize" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textAlignment="viewStart"
+                    android:id="@+id/tv_negative_state"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:layout_width="0dp"
+                    android:text="@string/negative"
+                    android:textSize="@dimen/lbltextSize" />
+
+                <TextView
+                    android:textAlignment="viewEnd"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_negative_state_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text=""
+                    android:textSize="@dimen/lbltextSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textAlignment="viewStart"
+                    android:id="@+id/tv_deaths_state"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:layout_width="0dp"
+                    android:text="@string/deaths"
+                    android:textSize="@dimen/lbltextSize" />
+
+                <TextView
+                    android:textAlignment="viewEnd"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_deaths_state_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text=""
+                    android:textSize="@dimen/lbltextSize" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_state"
+                app:icon="@drawable/ic_insert_chart_black_24dp"
+                app:iconGravity="textStart"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/view_history" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
+
+
+    <!--            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/essex"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:paddingBottom="5dp"
+                        android:id="@+id/tv_positive_essex"
+                        android:layout_width="match_parent"
+                        android:textSize="15sp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/positive"/>
+
+                    <TextView
+                        android:paddingBottom="5dp"
+                        android:textSize="15sp"
+                        android:id="@+id/tv_negative_essex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/negative"/>
+
+                    <TextView
+                        android:paddingBottom="5dp"
+                        android:textSize="15sp"
+                        android:id="@+id/tv_deaths_essex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/deaths"/>
+
+                    <Button
+                        android:id="@+id/btn_essex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/essex" />
+                </LinearLayout>
+    -->

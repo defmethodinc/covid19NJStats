@@ -3,13 +3,13 @@ package com.jesusmar.covid19njstats.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.jesusmar.covid19njstats.R
 import com.jesusmar.covid19njstats.models.DailyData
@@ -19,6 +19,8 @@ import com.jesusmar.covid19njstats.util.Auth0AuthenticationTask
 import com.jesusmar.covid19njstats.util.Covid19Authentication
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_card_essex_content.*
+import kotlinx.android.synthetic.main.fragment_card_state_content.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,14 +30,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         last_update.text = ""
-        tv_positive_state.text = ""
-        tv_positive_essex.text = ""
-        tv_negative_state.text = ""
-        tv_negative_essex.text = ""
-        tv_deaths_state.text = ""
-        tv_deaths_essex.text = ""
+
+        tabs.tabGravity = TabLayout.GRAVITY_FILL
+
+        val adapter = TabLayoutAdapter(supportFragmentManager, tabs.tabCount, tabs.tabCount)
+
+        viewPager.adapter = adapter
+
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+
+        tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager.currentItem = tab!!.position
+            }
+
+        })
 
         val covid19Auth =
             Covid19Authentication(this)
@@ -48,16 +66,15 @@ class MainActivity : AppCompatActivity() {
                     override fun success() {
                         getDailyData()
                         getAllData()
-                        btn_state.setOnClickListener {
-                            val stateIntent = Intent(this@MainActivity, StateHistory::class.java)
-                            startActivity(stateIntent)
-                        }
-
                         btn_essex.setOnClickListener {
                             val stateIntent = Intent(this@MainActivity, EssexHistory::class.java)
-                            startActivity(stateIntent)
-                        }
+                                startActivity(stateIntent)
+                            }
 
+                        btn_state.setOnClickListener {
+                                    val stateIntent = Intent(this@MainActivity, StateHistory::class.java)
+                                    startActivity(stateIntent)
+                        }
                     }
 
                     override fun fail() {
@@ -100,14 +117,14 @@ class MainActivity : AppCompatActivity() {
                 for (resp in response.dailyData) {
                     when (resp.owner) {
                         getString(R.string.NJ) -> {
-                            tv_positive_state.text = getString(R.string.positive, resp.positive)
-                            tv_negative_state.text = getString(R.string.negative, resp.negative)
-                            tv_deaths_state.text = getString(R.string.deaths, resp.deaths)
+                            tv_positive_state_value.text = resp.positive.toString()
+                            tv_negative_state_value.text = resp.negative.toString()
+                            tv_deaths_state_value.text = resp.deaths.toString()
                         }
                         getString(R.string.essex) -> {
-                            tv_positive_essex.text = getString(R.string.positive, resp.positive)
-                            tv_negative_essex.text = getString(R.string.negative, resp.negative)
-                            tv_deaths_essex.text = getString(R.string.deaths, resp.deaths)
+                            tv_positive_essex_value.text = resp.positive.toString()
+                            tv_negative_essex_value.text = resp.negative.toString()
+                            tv_deaths_essex_value.text = resp.deaths.toString()
                         }
                     }
                 }
@@ -201,6 +218,11 @@ class MainActivity : AppCompatActivity() {
         chart_all.description.text= ""
         chart_all.description.textSize = 14F
         chart_all.data = lineData
+        chart_all.axisLeft.setDrawGridLines(false)
+        chart_all.axisRight.setDrawGridLines(false)
+        chart_all.xAxis.setDrawGridLines(false)
+
+
         chart_all.invalidate()
     }
 

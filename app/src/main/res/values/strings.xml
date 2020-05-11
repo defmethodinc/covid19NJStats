@@ -6,9 +6,9 @@
     <string name="sharedPrefs">covid19NJStat</string>
 
     <!-- Labels/code strings -->
-    <string name="positive">positive: %d</string>
-    <string name="negative">positive: %d</string>
-    <string name="deaths">deaths: %d</string>
+    <string name="positive">Positive:</string>
+    <string name="negative">Negative:</string>
+    <string name="deaths">Deaths:</string>
     <string name="last_update">Last Update: %s</string>
     <string name="stateHistoryTitle">State History</string>
     <string name="percent_per_day">% per day</string>
@@ -35,4 +35,6 @@
     <string name="History">History</string>
     <string name="state_growth_label">State Daily growth %</string>
     <string name="essex_daily_growth">Essex daily growth %</string>
+
+    <string name="view_history">View History</string>
 </resources>
