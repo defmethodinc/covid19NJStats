@@ -1,6 +1,6 @@
-# Covid18NJStats
+# Covid19NJStats
 
-Covid19 it is a android app, which had the propose of learning how to create apps in android. It tracks covid19 stats in New Jersey and Essex county gathering data from a Rails API.  
+Covid19NJStats it is a android app, which had the propose of learning how to create apps in android. It tracks covid19 stats in New Jersey and Essex county gathering data from a Rails API.  
 The app could not be published because it needs a especial permission from the government to use the "Covid19" term.
 
 ## how it works/features
