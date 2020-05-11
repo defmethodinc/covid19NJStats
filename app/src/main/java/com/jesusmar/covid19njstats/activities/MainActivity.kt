@@ -3,7 +3,6 @@ package com.jesusmar.covid19njstats.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.data.BarEntry
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         last_update.text = ""
 
         tabs.tabGravity = TabLayout.GRAVITY_FILL
-
 
         val adapter = TabLayoutAdapter(supportFragmentManager, tabs.tabCount, tabs.tabCount)
 

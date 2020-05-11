@@ -1,11 +1,11 @@
-package com.jesusmar.covid19njstats
+package com.jesusmar.covid19njstats.activities
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_card_essex_content.*
+import com.jesusmar.covid19njstats.R
 import kotlinx.android.synthetic.main.fragment_card_essex_content.view.*
 
 
@@ -35,6 +35,7 @@ class CardEssexContent : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = CardEssexContent().apply {}
+        fun newInstance() = CardEssexContent()
+            .apply {}
     }
 }
