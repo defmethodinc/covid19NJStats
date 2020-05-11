@@ -40,19 +40,20 @@ class MainActivityTest {
     @Test
     fun checkUILabel() {
         Espresso.onView(ViewMatchers.withId(R.id.btn_essex)).check(
-            ViewAssertions.matches(ViewMatchers.withText("Essex")))
-    }
-
-    @Test
-    fun callsEssexActivity(){
-        Espresso.onView(ViewMatchers.withId(R.id.btn_essex)).perform(ViewActions.click())
-        intended(hasComponent(EssexHistory::class.java.getName()))
+            ViewAssertions.matches(ViewMatchers.withText("VIEW HISTORY")))
     }
 
     @Test
     fun callsStateActivity(){
         Espresso.onView(ViewMatchers.withId(R.id.btn_state)).perform(ViewActions.click())
         intended(hasComponent(StateHistory::class.java.getName()))
+    }
+
+    @Test
+    fun callsEssexActivity(){
+        Espresso.onView(ViewMatchers.withText("ESSEX")).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.btn_essex)).perform(ViewActions.click())
+        intended(hasComponent(EssexHistory::class.java.getName()))
     }
 
 }

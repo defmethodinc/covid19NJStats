@@ -29,7 +29,7 @@ class GetDataFromAPITaskTest {
     }
 
     @Test
-    fun teste()
+    fun getDataFromAPI()
     {
 
         var response: String? = null
