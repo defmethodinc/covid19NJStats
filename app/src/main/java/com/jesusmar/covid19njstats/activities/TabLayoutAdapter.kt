@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class TabLayoutAdapter(fm: FragmentManager, behavior: Int, private val totalTabs: Int) : FragmentPagerAdapter(fm, behavior) {
+class TabLayoutAdapter(fm: FragmentManager, private val behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
@@ -19,7 +19,7 @@ class TabLayoutAdapter(fm: FragmentManager, behavior: Int, private val totalTabs
     }
 
     override fun getCount(): Int {
-        return totalTabs
+        return behavior
     }
 
 }

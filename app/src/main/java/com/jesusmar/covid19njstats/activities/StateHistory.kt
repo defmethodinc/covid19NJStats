@@ -1,6 +1,5 @@
 package com.jesusmar.covid19njstats.activities
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -10,7 +9,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import com.jesusmar.covid19njstats.R
-import com.jesusmar.covid19njstats.models.DailyData
 import com.jesusmar.covid19njstats.models.GrowthData
 import com.jesusmar.covid19njstats.models.ResponseData
 import com.jesusmar.covid19njstats.models.ResponseDataGrowth
@@ -37,14 +35,13 @@ class StateHistory : AppCompatActivity() {
     private fun getStateGrowth() {
 
             val dataTask = GetDataFromAPITask(
-                getString(R.string.growth_nj), this
+                getString(R.string.api_growth_nj), this
             )
 
             dataTask.setDataListener(object :
                 GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-                val response = Gson().fromJson(data, ResponseDataGrowth::class.java)
-                val stateDataGrowth: List<GrowthData> = response.dailyData
+            override fun onSuccess(data: Any?) {
+                val stateDataGrowth: List<GrowthData> = (data as ResponseDataGrowth).dailyData
                 val entries = ArrayList<Entry>()
                 for ((day, dataRow) in stateDataGrowth.withIndex()) {
                     entries.add(Entry(day.toFloat(), dataRow.value.toFloat()))
@@ -71,17 +68,21 @@ class StateHistory : AppCompatActivity() {
                 val lineData = LineData(dataSet)
                 lineData.setValueTextSize(8f)
 
-                chart_growthState.axisRight.setValueFormatter(formatter)
-                chart_growthState.xAxis.setLabelCount(entries.size / 5, true)
-                chart_growthState.xAxis.axisMinimum = 0F
-                chart_growthState.axisLeft.axisMinimum = 0F
-                chart_growthState.axisRight.axisMinimum = 0F
-                chart_growthState.axisRight.setLabelCount(10, true)
-                chart_growthState.axisLeft.setDrawLabels(false)
-                chart_growthState.description.text = ""
-                chart_growthState.description.textSize = 14F
                 chart_growthState.data = lineData
-                chart_growthState.invalidate()
+                with(chart_growthState) {
+                    axisRight.setValueFormatter(formatter)
+                    xAxis.setLabelCount(entries.size / 5, true)
+                    xAxis.axisMinimum = 0F
+                    axisLeft.axisMinimum = 0F
+                    axisRight.axisMinimum = 0F
+                    axisRight.setLabelCount(10, true)
+                    axisLeft.setDrawLabels(false)
+                    description.text = ""
+                    description.textSize = 14F
+                    invalidate()
+                }
+
+
 
             }
 

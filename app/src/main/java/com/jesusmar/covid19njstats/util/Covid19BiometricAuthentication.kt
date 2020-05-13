@@ -14,7 +14,7 @@ import java.net.URL
 import java.util.concurrent.Executor
 import javax.net.ssl.HttpsURLConnection
 
-open class Covid19Authentication(private val context: Context) {
+open class Covid19BiometricAuthentication(private val context: Context) {
 
     lateinit var covid19AuthCallBacks: Covid19AuthCallBacks
 
@@ -22,7 +22,7 @@ open class Covid19Authentication(private val context: Context) {
         this.covid19AuthCallBacks = covid19AuthCallBacks
     }
 
-    interface Covid19AuthCallBacks{
+    interface Covid19AuthCallBacks {
         fun onSuccess()
         fun onFail()
     }

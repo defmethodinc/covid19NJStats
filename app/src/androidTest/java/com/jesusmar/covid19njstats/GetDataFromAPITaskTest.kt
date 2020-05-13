@@ -1,8 +1,8 @@
 package com.jesusmar.covid19njstats
 
 import android.content.Context
-import android.test.mock.MockContext
 import androidx.test.platform.app.InstrumentationRegistry
+import com.jesusmar.covid19njstats.models.ResponseData
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import org.junit.After
 import org.junit.Assert
@@ -19,7 +19,7 @@ class GetDataFromAPITaskTest {
 
     @Before
     fun setUp() {
-        context = InstrumentationRegistry.getInstrumentation().targetContext
+        context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         signal = CountDownLatch(1)
     }
 
@@ -32,13 +32,13 @@ class GetDataFromAPITaskTest {
     fun getDataFromAPI()
     {
 
-        var response: String? = null
+        var response: ResponseData? = null
         task =
-            GetDataFromAPITask("https://covid19njapi.herokuapp.com/today", context )
+            GetDataFromAPITask("/today", context )
 
         task.setDataListener(object : GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-             response = data
+            override fun onSuccess(data: Any?) {
+             response = (data as ResponseData)
              signal!!.countDown()
             }
 
