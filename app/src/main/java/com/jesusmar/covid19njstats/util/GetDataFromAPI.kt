@@ -4,13 +4,8 @@ import android.content.Context
 
 import android.os.AsyncTask
 import com.jesusmar.covid19njstats.R
-import java.io.*
-import java.net.HttpURLConnection
-import java.net.SocketTimeoutException
-import java.net.URL
-import java.nio.charset.Charset
 
-class GetDataFromAPITask(private val mUrl: String, private val context: Context): AsyncTask<Any, Void ,String>() {
+class GetDataFromAPITask(private val mUrl: String, private val context: Context): AsyncTask<Any, Void ,Any>() {
 
     private lateinit var mDataListener: DataListener
 
@@ -18,61 +13,33 @@ class GetDataFromAPITask(private val mUrl: String, private val context: Context)
         execute()
     }
 
-    private fun getAuthenticatedData(token:String):String {
-        var result : String
-        try {
-            val url = URL(mUrl)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.doInput = true
-            connection.doOutput = false
+    override fun doInBackground(vararg params: Any?): Any {
+        val shared = context.applicationContext.getSharedPreferences(context.getString(R.string.sharedPrefs), 0)
+        val apiToken = shared.getString(context.applicationContext.getString(R.string.auth0TokenKey), "")!!
+        return getAuthenticatedData(apiToken)!!
+    }
 
-            connection.setRequestProperty("Content-Type", "application/json")
-            connection.setRequestProperty("Authorization", token)
+    private fun getAuthenticatedData(apiToken: String): Any? {
+        val headers = mapOf<String,String>(Pair("Content-Type","application/json"), Pair("Authorization:", apiToken))
 
-            val httpResult: Int = connection.responseCode
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-                val inputStream = connection.inputStream
-
-                val reader = BufferedReader(InputStreamReader(inputStream))
-                val stringBuilder = StringBuilder()
-                var line: String?
-                try {
-                    while(reader.readLine().also { line  = it } != null) {
-                        stringBuilder.append(line + "\n")
-                    }
-                } catch (e: IOException){
-                    e.printStackTrace()
-                } finally {
-                    try {
-                        inputStream.close()
-                    } catch (e: IOException){
-                        e.printStackTrace()
-                    }
-                }
-                result = stringBuilder.toString()
-            } else {
-                result = "deu chabu no server"
+        return when (mUrl) {
+            context.getString(R.string.api_today) -> {
+                 Covid19API.getCovid19APIService().today(headers).execute().body()!!
             }
-        } catch(e: SocketTimeoutException){
-            e.printStackTrace()
-            result = "connection timeout"
-        } catch (e: Exception){
-            e.printStackTrace()
-            result = "deu chabu desconehcido"
+            context.getString(R.string.api_all) -> {
+                 Covid19API.getCovid19APIService().comparison(headers).execute().body()!!
+            }
+            context.getString(R.string.api_growth_nj) -> {
+                 Covid19API.getCovid19APIService().state_growth(headers).execute().body()!!
+            }
+            context.getString(R.string.api_growth_essex) -> {
+                 Covid19API.getCovid19APIService().essex_growth(headers).execute().body()!!
+            }
+            else -> null
         }
-        return result
     }
 
-    override fun doInBackground(vararg params: Any?): String {
-        val shared = context.getSharedPreferences(context.getString(R.string.sharedPrefs), 0)
-        val apiToken = shared.getString(context.getString(R.string.auth0TokenKey), "")!!
-
-        return getAuthenticatedData(apiToken)
-    }
-
-    override fun onPostExecute(result: String?) {
+    override fun onPostExecute(result: Any?) {
         if (result != null){
             mDataListener.onSuccess(result)
         } else {
@@ -87,7 +54,9 @@ class GetDataFromAPITask(private val mUrl: String, private val context: Context)
     }
 
     interface DataListener {
-        fun onSuccess(data:String)
+        fun onSuccess(data: Any?)
         fun onError()
     }
+
+
 }

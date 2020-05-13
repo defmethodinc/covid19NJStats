@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.jesusmar.covid19njstats.R
 
+
 class Covid19FireBase : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        ChannelRegister().execute(token)
-
+        ChannelRegister().register(token)
     }
 
 

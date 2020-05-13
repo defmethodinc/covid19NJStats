@@ -10,13 +10,12 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.tabs.TabLayout
-import com.google.gson.Gson
 import com.jesusmar.covid19njstats.R
 import com.jesusmar.covid19njstats.models.DailyData
 import com.jesusmar.covid19njstats.models.ResponseData
 import com.jesusmar.covid19njstats.notification.Covid19FireBase
 import com.jesusmar.covid19njstats.util.Auth0AuthenticationTask
-import com.jesusmar.covid19njstats.util.Covid19Authentication
+import com.jesusmar.covid19njstats.util.Covid19BiometricAuthentication
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_card_essex_content.*
@@ -30,19 +29,39 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
-        last_update.text = ""
 
-        tabs.tabGravity = TabLayout.GRAVITY_FILL
+        setupTabLayout()
 
-        val adapter = TabLayoutAdapter(supportFragmentManager, tabs.tabCount, tabs.tabCount)
+        val covid19BiometricAuth = Covid19BiometricAuthentication(this)
 
+        covid19BiometricAuth.setCallBack(object :
+            Covid19BiometricAuthentication.Covid19AuthCallBacks {
+            override fun onSuccess() {
+                Covid19FireBase.setChannel(this@MainActivity)
+                val auth0Authentication = Auth0AuthenticationTask(this@MainActivity)
+                auth0Authentication(auth0Authentication)
+            }
+
+            override fun onFail() {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.biometric_authentication_failed_tryagan_later),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+        covid19BiometricAuth.runAuthentication()
+    }
+
+
+    private fun setupTabLayout() {
+        val adapter = TabLayoutAdapter(supportFragmentManager, tabs.tabCount)
         viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
 
-        tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
@@ -54,67 +73,50 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
 
-        val covid19Auth =
-            Covid19Authentication(this)
-
-        covid19Auth.setCallBack(object : Covid19Authentication.Covid19AuthCallBacks {
-            override fun onSuccess() {
-                Covid19FireBase.setChannel(this@MainActivity)
-                val auth0Authentication = Auth0AuthenticationTask(this@MainActivity)
-                auth0Authentication.setListener(object: Auth0AuthenticationTask.Auth0Listener{
-                    override fun success() {
-                        getDailyData()
-                        getAllData()
-                        btn_essex.setOnClickListener {
-                            val stateIntent = Intent(this@MainActivity, EssexHistory::class.java)
-                                startActivity(stateIntent)
-                            }
-
-                        btn_state.setOnClickListener {
-                                    val stateIntent = Intent(this@MainActivity, StateHistory::class.java)
-                                    startActivity(stateIntent)
-                        }
-                    }
-
-                    override fun fail() {
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(R.string.api_authentication_failed_tryagan_later), Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
-                })
-                auth0Authentication.getToken()
+    private fun auth0Authentication(auth0Authentication: Auth0AuthenticationTask) {
+        auth0Authentication.setListener(object : Auth0AuthenticationTask.Auth0Listener {
+            override fun success() {
+                lastUpdates()
+                comparisonData()
+                btn_essex.setOnClickListener {
+                    val stateIntent = Intent(this@MainActivity, EssexHistory::class.java)
+                    startActivity(stateIntent)
+                }
+                btn_state.setOnClickListener {
+                    val stateIntent = Intent(this@MainActivity, StateHistory::class.java)
+                    startActivity(stateIntent)
+                }
             }
 
-            override fun onFail() {
+            override fun fail() {
                 Toast.makeText(
                     this@MainActivity,
-                    getString(R.string.biometric_authentication_failed_tryagan_later), Toast.LENGTH_SHORT
+                    getString(R.string.api_authentication_failed_tryagan_later), Toast.LENGTH_SHORT
                 ).show()
             }
         })
-        covid19Auth.runAuthentication()
+        auth0Authentication.getToken()
     }
 
-    private fun getDailyData() {
+    private fun lastUpdates() {
         val dataTask = GetDataFromAPITask(
-            getString(R.string.todayUri),
+            getString(R.string.api_today),
             this
         )
 
         dataTask.setDataListener(object :
             GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-                val response = Gson().fromJson(data, ResponseData::class.java)
+            override fun onSuccess(data: Any?) {
+                val dailyDataResponse = data as ResponseData
                 val sdf = SimpleDateFormat("MMM dd,yyyy", Locale.getDefault())
                 last_update.text = getString(
                     R.string.last_update,
-                    if (response.dailyData.isNotEmpty()) sdf.format(response.dailyData[0].date) else "None"
+                    if (dailyDataResponse.dailyData.isNotEmpty()) sdf.format(dailyDataResponse.dailyData[0].date) else "None"
                 )
 
-                for (resp in response.dailyData) {
+                for (resp in dailyDataResponse.dailyData) {
                     when (resp.owner) {
                         getString(R.string.NJ) -> {
                             tv_positive_state_value.text = resp.positive.toString()
@@ -141,21 +143,27 @@ class MainActivity : AppCompatActivity() {
         dataTask.getData()
     }
 
-
-    private fun getAllData() {
+    private fun comparisonData() {
         val dataTask = GetDataFromAPITask(
-            getString(R.string.allUri),
+            getString(R.string.api_all),
             this
         )
 
         dataTask.setDataListener(object :
             GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-                val response = Gson().fromJson(data, ResponseData::class.java)
+            override fun onSuccess(data: Any?) {
                 val nJData =
-                    response.dailyData.filter { dataRow -> dataRow.owner == getString(R.string.NJ) }
+                    (data as ResponseData).dailyData.filter { dataRow ->
+                        dataRow.owner == getString(
+                            R.string.NJ
+                        )
+                    }
                 val essexData =
-                    response.dailyData.filter { dataRow -> dataRow.owner == getString(R.string.essex) }
+                    data.dailyData.filter { dataRow ->
+                        dataRow.owner == getString(
+                            R.string.essex
+                        )
+                    }
                 setupChart(nJData, essexData)
             }
 
@@ -206,24 +214,25 @@ class MainActivity : AppCompatActivity() {
         )
 
         lineData.setValueTextSize(0f)
-        chart_all.xAxis.setLabelCount(nJData.size / 5, true)
-        chart_all.xAxis.axisMinimum = 0F
-        chart_all.axisLeft.axisMinimum = 0F
-        chart_all.axisRight.axisMinimum = 0F
-        chart_all.axisRight.setLabelCount(10, true)
-        chart_all.axisLeft.setLabelCount(0, true)
-        chart_all.description.setPosition(760F, 100F)
-        chart_all.legend.textSize = 18F
-        chart_all.axisLeft.setDrawLabels(false)
-        chart_all.description.text= ""
-        chart_all.description.textSize = 14F
-        chart_all.data = lineData
-        chart_all.axisLeft.setDrawGridLines(false)
-        chart_all.axisRight.setDrawGridLines(false)
-        chart_all.xAxis.setDrawGridLines(false)
-
-
-        chart_all.invalidate()
+        with(comparison_chart) {
+            xAxis.setLabelCount(nJData.size / 5, true)
+            xAxis.setLabelCount(nJData.size / 5, true)
+            xAxis.axisMinimum = 0F
+            axisLeft.axisMinimum = 0F
+            axisRight.axisMinimum = 0F
+            axisRight.setLabelCount(10, true)
+            axisLeft.setLabelCount(0, true)
+            description.setPosition(760F, 100F)
+            legend.textSize = 18F
+            axisLeft.setDrawLabels(false)
+            description.text = ""
+            description.textSize = 14F
+            data = lineData
+            axisLeft.setDrawGridLines(false)
+            axisRight.setDrawGridLines(false)
+            xAxis.setDrawGridLines(false)
+            invalidate()
+        }
     }
 
 }

@@ -10,9 +10,9 @@ import com.google.gson.Gson
 import com.jesusmar.covid19njstats.util.GetDataFromAPITask
 import com.jesusmar.covid19njstats.R
 import com.jesusmar.covid19njstats.models.GrowthData
+import com.jesusmar.covid19njstats.models.ResponseData
 import com.jesusmar.covid19njstats.models.ResponseDataGrowth
 import kotlinx.android.synthetic.main.activity_essex_history.*
-import kotlinx.android.synthetic.main.activity_state_history.*
 
 class EssexHistory : AppCompatActivity() {
 
@@ -33,14 +33,13 @@ class EssexHistory : AppCompatActivity() {
     private fun getStateGrowth() {
 
         val dataTask = GetDataFromAPITask(
-            getString(R.string.growth_essex), this
+            getString(R.string.api_growth_essex), this
         )
 
         dataTask.setDataListener(object :
             GetDataFromAPITask.DataListener {
-            override fun onSuccess(data: String) {
-                val response = Gson().fromJson(data, ResponseDataGrowth::class.java)
-                val stateDataGrowth: List<GrowthData> = response.dailyData
+            override fun onSuccess(data: Any?) {
+                val stateDataGrowth: List<GrowthData> = (data as ResponseDataGrowth).dailyData
                 val entries = ArrayList<BarEntry>()
                 for ((day, dataRow) in stateDataGrowth.withIndex()) {
                     entries.add(BarEntry(day.toFloat(), dataRow.value.toFloat()))
@@ -64,25 +63,21 @@ class EssexHistory : AppCompatActivity() {
                 lineData.setValueTextSize(8f)
 
                 lineData.setDrawValues(false)
-                chart_essex.axisRight.setValueFormatter(formatter)
-                chart_essex.xAxis.setLabelCount(entries.size / 5, true)
-                chart_essex.xAxis.axisMinimum = 0F
-                chart_essex.axisLeft.axisMinimum = 0F
-                chart_essex.axisRight.axisMinimum = 0F
-                chart_essex.axisRight.setLabelCount(10, true)
-                chart_essex.axisLeft.setLabelCount(0, true)
-                chart_essex.description.setPosition(760F, 100F)
-                chart_essex.axisLeft.setDrawLabels(false)
-                chart_essex.description.text = "Growth percentage per day"
-                chart_essex.description.textSize = 14F
-
-
-
                 chart_essex.data = lineData
-                chart_essex.invalidate()
-
-
-
+                with(chart_essex) {
+                    axisRight.setValueFormatter(formatter)
+                    xAxis.setLabelCount(entries.size / 5, true)
+                    xAxis.axisMinimum = 0F
+                    axisLeft.axisMinimum = 0F
+                    axisRight.axisMinimum = 0F
+                    axisRight.setLabelCount(10, true)
+                    axisLeft.setLabelCount(0, true)
+                    description.setPosition(760F, 100F)
+                    axisLeft.setDrawLabels(false)
+                    description.text = "Growth percentage per day"
+                    description.textSize = 14F
+                    invalidate()
+                }
             }
 
             override fun onError() {
