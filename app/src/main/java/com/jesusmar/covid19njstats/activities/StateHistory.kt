@@ -35,7 +35,9 @@ class StateHistory : AppCompatActivity() {
     private fun getStateGrowth() {
 
             val dataTask = GetDataFromAPITask(
-                getString(R.string.api_growth_nj), this
+                this,
+                getString(R.string.api_growth),
+                getString(R.string.api_params_growth_nj)
             )
 
             dataTask.setDataListener(object :

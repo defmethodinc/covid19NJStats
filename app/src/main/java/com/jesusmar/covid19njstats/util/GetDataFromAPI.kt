@@ -5,7 +5,10 @@ import android.content.Context
 import android.os.AsyncTask
 import com.jesusmar.covid19njstats.R
 
-class GetDataFromAPITask(private val mUrl: String, private val context: Context): AsyncTask<Any, Void ,Any>() {
+class GetDataFromAPITask(private val context: Context,
+                         private val mUrl: String,
+                         private val urlParams: String? = null
+                         ): AsyncTask<Any, Void ,Any>() {
 
     private lateinit var mDataListener: DataListener
 
@@ -29,13 +32,12 @@ class GetDataFromAPITask(private val mUrl: String, private val context: Context)
             context.getString(R.string.api_all) -> {
                  Covid19API.getCovid19APIService().comparison(headers).execute().body()!!
             }
-            context.getString(R.string.api_growth_nj) -> {
-                 Covid19API.getCovid19APIService().state_growth(headers).execute().body()!!
+            context.getString(R.string.api_growth) -> {
+                Covid19API.getCovid19APIService().growth(headers, urlParams!!).execute().body()!!
             }
-            context.getString(R.string.api_growth_essex) -> {
-                 Covid19API.getCovid19APIService().essex_growth(headers).execute().body()!!
+            else -> {
+                null
             }
-            else -> null
         }
     }
 

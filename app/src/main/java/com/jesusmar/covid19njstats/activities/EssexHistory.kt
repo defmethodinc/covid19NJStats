@@ -33,9 +33,10 @@ class EssexHistory : AppCompatActivity() {
     private fun getStateGrowth() {
 
         val dataTask = GetDataFromAPITask(
-            getString(R.string.api_growth_essex), this
+            this,
+            getString(R.string.api_growth),
+            getString(R.string.api_params_growth_essex)
         )
-
         dataTask.setDataListener(object :
             GetDataFromAPITask.DataListener {
             override fun onSuccess(data: Any?) {

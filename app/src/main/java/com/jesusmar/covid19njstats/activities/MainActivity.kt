@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun lastUpdates() {
         val dataTask = GetDataFromAPITask(
-            getString(R.string.api_today),
-            this
+            this,
+            getString(R.string.api_today)
         )
 
         dataTask.setDataListener(object :
@@ -145,8 +145,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun comparisonData() {
         val dataTask = GetDataFromAPITask(
-            getString(R.string.api_all),
-            this
+            this,
+            getString(R.string.api_all)
         )
 
         dataTask.setDataListener(object :

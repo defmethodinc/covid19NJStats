@@ -24,8 +24,9 @@
     <string name="api_all">/all</string>
     <string name="api_essex">/essex</string>
     <string name="api_state">/state</string>
-    <string name="api_growth_nj">/growth_nj</string>
-    <string name="api_growth_essex">/growth_essex</string>
+    <string name="api_growth">/growth</string>
+        <string name="api_params_growth_nj">NJ</string>
+        <string name="api_params_growth_essex">Essex</string>
 
     <!-- errors -->
     <string name="error_state_data_message">Could not get State data</string>

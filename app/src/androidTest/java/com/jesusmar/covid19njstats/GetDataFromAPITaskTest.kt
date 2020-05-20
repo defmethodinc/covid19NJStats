@@ -34,7 +34,7 @@ class GetDataFromAPITaskTest {
 
         var response: ResponseData? = null
         task =
-            GetDataFromAPITask("/today", context )
+            GetDataFromAPITask(context,"/today" )
 
         task.setDataListener(object : GetDataFromAPITask.DataListener {
             override fun onSuccess(data: Any?) {
