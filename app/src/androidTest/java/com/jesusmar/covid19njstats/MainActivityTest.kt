@@ -4,15 +4,13 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.jesusmar.covid19njstats.activities.EssexHistory
+import com.jesusmar.covid19njstats.activities.GrowthActivity
 import com.jesusmar.covid19njstats.activities.MainActivity
-import com.jesusmar.covid19njstats.activities.StateHistory
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -46,14 +44,14 @@ class MainActivityTest {
     @Test
     fun callsStateActivity(){
         Espresso.onView(ViewMatchers.withId(R.id.btn_state)).perform(ViewActions.click())
-        intended(hasComponent(StateHistory::class.java.getName()))
+        Intents.intended(IntentMatchers.hasComponent(GrowthActivity::class.java.getName()))
     }
 
     @Test
     fun callsEssexActivity(){
         Espresso.onView(ViewMatchers.withText("ESSEX")).perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.btn_essex)).perform(ViewActions.click())
-        intended(hasComponent(EssexHistory::class.java.getName()))
+        Intents.intended(IntentMatchers.hasComponent(GrowthActivity::class.java.getName()))
     }
 
 }

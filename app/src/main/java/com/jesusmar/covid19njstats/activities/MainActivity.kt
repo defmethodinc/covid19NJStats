@@ -81,13 +81,16 @@ class MainActivity : AppCompatActivity() {
                 lastUpdates()
                 comparisonData()
                 btn_essex.setOnClickListener {
-                    val stateIntent = Intent(this@MainActivity, EssexHistory::class.java)
+                    val stateIntent = Intent(this@MainActivity, GrowthActivity::class.java)
+                    stateIntent.putExtra("owner","Essex")
                     startActivity(stateIntent)
                 }
                 btn_state.setOnClickListener {
-                    val stateIntent = Intent(this@MainActivity, StateHistory::class.java)
+                    val stateIntent = Intent(this@MainActivity, GrowthActivity::class.java)
+                    stateIntent.putExtra("owner","NJ")
                     startActivity(stateIntent)
                 }
+
             }
 
             override fun fail() {
