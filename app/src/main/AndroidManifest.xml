@@ -16,14 +16,13 @@
         android:usesCleartextTraffic="true"
         android:versionCode="2"
         tools:targetApi="m">
+
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.test.base" />
         <uses-library android:name="android.test.mock" />
-        <activity android:name=".activities.EssexHistory"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".activities.StateHistory"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".activities.GrowthActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/covid19" />
@@ -42,7 +42,7 @@
             android:value="@string/default_notification_channel_id" />
 
         <service
-            android:name="com.jesusmar.covid19njstats.notification.Covid19FireBase"
+            android:name=".notification.Covid19FireBase"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
